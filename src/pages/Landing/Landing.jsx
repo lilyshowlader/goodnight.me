@@ -1,4 +1,5 @@
 import styles from "./Landing.module.css"
+// import NavBar from "../../components/NavBar/NavBar"
 
 const Landing = () => {
   return (
