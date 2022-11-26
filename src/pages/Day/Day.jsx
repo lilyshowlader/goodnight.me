@@ -1,30 +1,46 @@
 import { useState } from "react";
 
-const Log = () => {
+
+
+const Day = (props) => {
   const [form, setForm]  = useState({
+    date: '',
     snoozedAt: '',
     wokeUp: '',
     totalHours: '',
     beforeSleep: '',
-    today: 'Working',
-    bodyCondition: '',
+    today: 'worked',
+    bodyCondition: 'feeling alright',
   })
+
 
 
   const handleChange = ({ target }) => {
     setForm({ ...form, [target.name]: target.value })
   }
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   handleAddBlog(form)
-  // }
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    props.handleAddDay(form)
+  }
 
   return (
     <>
+    <h1>{new Date().toLocaleTimeString()}</h1>
     <h1>are you cozy?</h1>
     <h1>good, now fill out the form</h1>
-    <form>
+    <form onSubmit={handleSubmit}>
+    <label>today's date:</label>
+      <input
+          required
+          type="text"
+          name="date"
+          id="date-input"
+          value={form.date}
+          placeholder="-/-/-"
+          onChange={handleChange}
+        />
+        <br></br>
       <label>yesterday I snoozed at:</label>
       <input
           required
@@ -50,9 +66,10 @@ const Log = () => {
       <label>total hours</label>
       <input
           required
-          type="text"
+          type="number"
           name="totalHours"
           id="totalHours-input"
+          max={15}
           value={form.totalHours}
           placeholder="hours"
           onChange={handleChange}
@@ -109,4 +126,4 @@ const Log = () => {
   )
 }
 
-export default Log
+export default Day

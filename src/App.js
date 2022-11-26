@@ -7,9 +7,19 @@ import Day from './pages/Day/Day';
 // import NavBar from './components/NavBar/NavBar';
 import { Routes, Route} from 'react-router-dom'
 
-
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import * as dayService from "./services/dayService.js"
 
 function App() {
+  const navigate = useNavigate()
+  const [days, setDays] = useState([])
+
+  const handleAddDay = async (dayData) => {
+    const newDay = await dayService.create(dayData)
+    setDays([newDay, ...days])
+    navigate('/days')
+  }
 
   return (
     <div className="App">
@@ -19,8 +29,8 @@ function App() {
       <Route path='/' element={<Landing/>} />
       <Route path='/options' element={<Options />}/>
       <Route path='/useapp' element={<UseApp />}/>
-      <Route path='/viewlogs' element={<ViewDays/>}/>
-      <Route path='/logfortoday' element={<Day />}/>
+      <Route path='/days' element={<ViewDays title="no" handle="mymy"/>}/>
+      <Route path='/days/new' element={<Day handleAddDay={handleAddDay}/>}/>
       </Routes> 
     </div>
 
